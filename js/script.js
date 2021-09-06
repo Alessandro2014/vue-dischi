@@ -5,20 +5,27 @@ Vue.config.devtools = true;
 const app = new Vue({
   el: '#app',
   data: {
-    albums: '',
+    albums: [],
+    selecteGenre: 'All',
   },
-  methods: {
-    converteString(album){
-    let stringDate = album.year;
-    let num = Number(stringDate);
-    console.log(num);
-    return num;
+  computed: {
+    orderedAlbums(){
+      return this.albums.sort((a, b) => a.year - b.year);
     },
-
-    orderedDate() {
-      
-    }
+    genreList(){
+      const list = [];
+      this.albums.forEach(album => {
+        if (!list.includes(album.genre)) list.push(album.genre);
+      });
+      return list;
+    },
+    filteredAlbums(){
+      const albums = this.orderedAlbums;
+      if (this.selecteGenre === 'All') return albums;
+      return albums.filter((album) => album.genre === this.selecteGenre);
+    },
   },
+  methods: {},
   created() {
     axios
     .get('https://flynn.boolean.careers/exercises/api/array/music')

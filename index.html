@@ -14,26 +14,23 @@
       <header>
         <div class="container">
           <img src="images/logo.png" />
+          <select v-model="selecteGenre">
+            <option>All</option>
+            <option v-for="genre in genreList">{{ genre }}</option>
+          </select>
         </div>
       </header>
       <main class="container">
         <section id="album-container">
-          <div class="card" v-for="album in albums">
-            <img :src="album.poster" :alt="album.poster" />
+          <div class="card" v-for="album in filteredAlbums">
+            <img :src="album.poster" :alt="album.title" />
             <h2  class="title">{{ album.title }}</h2>
             <address class="author">{{ album.author }}</address>
-            <time datetime="1988" class="year">{{ converteString(album) }}</time>
+            <time :datetime="album.year" class="year">{{ album.year }}</time>
           </div>
         </section>
       </main>
     </div>
-
-
-    <!-- <select name="" id="">
-      <option>All</option>
-      <option>Pop</option>
-      <option>Pop</option>
-    </select> -->
 
 
     <script src="js/script.js"></script>
